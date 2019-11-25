@@ -9,7 +9,16 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Executable.json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/GrappleWebGL.json", {onProgress: UnityProgress});
+	  setInterval(function() {
+		if (typeof TOTAL_MEMORY !== 'undefined') {
+			try {
+				var totalMem = TOTAL_MEMORY/1024.0/1024.0;
+				var usedMem = (TOTAL_STACK + (STATICTOP - STATIC_BASE) + (DYNAMICTOP - DYNAMIC_BASE))/1024.0/1024.0;
+				console.log('Memory stats - used: ' + Math.ceil(usedMem) + 'M' + ' free: ' + Math.floor(totalMem - usedMem) + 'M');
+			} catch (e) {}
+		}
+	  }, 5000);
     </script>
   </head>
   <body>
